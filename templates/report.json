@@ -1,0 +1,134 @@
+{
+  "name": "Business Report",
+  "description": "Business report template with summary and data tables",
+  "type": "pdf",
+  "schema": {
+    "pageSize": "A4",
+    "margins": { "top": 50, "right": 50, "bottom": 50, "left": 50 },
+    "components": [
+      {
+        "id": "header",
+        "type": "container",
+        "props": { "style": { "marginBottom": "30px", "borderBottom": "2px solid #333", "paddingBottom": "20px" } },
+        "children": [
+          {
+            "id": "title",
+            "type": "heading",
+            "props": { "level": 1, "text": "{{reportTitle}}", "style": { "fontSize": "28px", "color": "#333" } }
+          },
+          {
+            "id": "subtitle",
+            "type": "text",
+            "props": { "text": "Report Period: {{period}}", "style": { "fontSize": "12px", "color": "#666" } }
+          },
+          {
+            "id": "generated",
+            "type": "text",
+            "props": { "text": "Generated: {{generatedDate}}", "style": { "fontSize": "10px", "color": "#999" } }
+          }
+        ]
+      },
+      {
+        "id": "summary",
+        "type": "container",
+        "props": { "style": { "marginBottom": "30px" } },
+        "children": [
+          {
+            "id": "summary-title",
+            "type": "heading",
+            "props": { "level": 2, "text": "Executive Summary", "style": { "fontSize": "18px", "marginBottom": "15px" } }
+          },
+          {
+            "id": "summary-text",
+            "type": "text",
+            "props": { "text": "{{summary}}", "style": { "fontSize": "11px", "lineHeight": "1.6" } }
+          }
+        ]
+      },
+      {
+        "id": "metrics",
+        "type": "container",
+        "props": { "style": { "display": "flex", "justifyContent": "space-between", "marginBottom": "30px" } },
+        "children": [
+          {
+            "id": "metric-1",
+            "type": "container",
+            "props": { "style": { "textAlign": "center", "padding": "20px", "backgroundColor": "#f8f9fa", "borderRadius": "8px", "width": "30%" } },
+            "children": [
+              { "id": "m1-value", "type": "text", "props": { "text": "{{metrics.revenue}}", "style": { "fontSize": "24px", "fontWeight": "bold", "color": "#28a745" } } },
+              { "id": "m1-label", "type": "text", "props": { "text": "Revenue", "style": { "fontSize": "10px", "color": "#666" } } }
+            ]
+          },
+          {
+            "id": "metric-2",
+            "type": "container",
+            "props": { "style": { "textAlign": "center", "padding": "20px", "backgroundColor": "#f8f9fa", "borderRadius": "8px", "width": "30%" } },
+            "children": [
+              { "id": "m2-value", "type": "text", "props": { "text": "{{metrics.orders}}", "style": { "fontSize": "24px", "fontWeight": "bold", "color": "#007bff" } } },
+              { "id": "m2-label", "type": "text", "props": { "text": "Orders", "style": { "fontSize": "10px", "color": "#666" } } }
+            ]
+          },
+          {
+            "id": "metric-3",
+            "type": "container",
+            "props": { "style": { "textAlign": "center", "padding": "20px", "backgroundColor": "#f8f9fa", "borderRadius": "8px", "width": "30%" } },
+            "children": [
+              { "id": "m3-value", "type": "text", "props": { "text": "{{metrics.customers}}", "style": { "fontSize": "24px", "fontWeight": "bold", "color": "#6f42c1" } } },
+              { "id": "m3-label", "type": "text", "props": { "text": "Customers", "style": { "fontSize": "10px", "color": "#666" } } }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "data-section",
+        "type": "container",
+        "children": [
+          {
+            "id": "data-title",
+            "type": "heading",
+            "props": { "level": 2, "text": "Detailed Data", "style": { "fontSize": "18px", "marginBottom": "15px" } }
+          },
+          {
+            "id": "data-table",
+            "type": "table",
+            "props": {
+              "headers": ["Category", "Value", "Change", "Status"],
+              "headerStyle": { "backgroundColor": "#343a40", "color": "#fff", "fontSize": "10px", "padding": "10px" },
+              "cellStyle": { "fontSize": "10px", "padding": "10px", "borderBottom": "1px solid #dee2e6" }
+            },
+            "children": [
+              {
+                "id": "data-loop",
+                "type": "loop",
+                "props": { "items": "{{data}}", "itemVariable": "row" },
+                "children": [
+                  {
+                    "id": "data-row",
+                    "type": "table-row",
+                    "children": [
+                      { "id": "cat", "type": "text", "props": { "text": "{{row.category}}" } },
+                      { "id": "val", "type": "text", "props": { "text": "{{row.value}}" } },
+                      { "id": "chg", "type": "text", "props": { "text": "{{row.change}}" } },
+                      { "id": "sts", "type": "text", "props": { "text": "{{row.status}}" } }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "variables": [
+    { "name": "reportTitle", "type": "string", "defaultValue": "Monthly Business Report" },
+    { "name": "period", "type": "string", "defaultValue": "December 2025" },
+    { "name": "generatedDate", "type": "string", "defaultValue": "2025-01-01" },
+    { "name": "summary", "type": "string", "defaultValue": "This report summarizes key business metrics and performance indicators for the reporting period." },
+    { "name": "metrics", "type": "object", "defaultValue": { "revenue": "$125,000", "orders": "1,234", "customers": "567" } },
+    { "name": "data", "type": "array", "itemType": "object", "defaultValue": [
+      { "category": "Product A", "value": "$45,000", "change": "+12%", "status": "Growing" },
+      { "category": "Product B", "value": "$38,000", "change": "+5%", "status": "Stable" }
+    ]}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "renderbase-webhook-handler",
+  "version": "1.0.0",
+  "description": "Webhook handler for Renderbase document events",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "dev": "tsx watch src/server.ts"
+  },
+  "dependencies": {
+    "@renderbase/sdk": "^1.0.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  }
+}

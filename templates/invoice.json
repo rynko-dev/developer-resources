@@ -1,0 +1,175 @@
+{
+  "name": "Invoice",
+  "description": "Professional invoice template for PDF generation",
+  "type": "pdf",
+  "schema": {
+    "pageSize": "A4",
+    "margins": {
+      "top": 40,
+      "right": 40,
+      "bottom": 40,
+      "left": 40
+    },
+    "components": [
+      {
+        "id": "header",
+        "type": "container",
+        "props": {
+          "style": {
+            "display": "flex",
+            "justifyContent": "space-between",
+            "marginBottom": "40px"
+          }
+        },
+        "children": [
+          {
+            "id": "company-info",
+            "type": "container",
+            "children": [
+              {
+                "id": "company-name",
+                "type": "text",
+                "props": {
+                  "text": "{{company.name}}",
+                  "style": {
+                    "fontSize": "18px",
+                    "fontWeight": "bold"
+                  }
+                }
+              },
+              {
+                "id": "company-address",
+                "type": "text",
+                "props": {
+                  "text": "{{company.address.line1}}\n{{company.address.city}}, {{company.address.state}} {{company.address.postalCode}}",
+                  "style": {
+                    "fontSize": "10px",
+                    "color": "#666666"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "invoice-details",
+            "type": "container",
+            "props": {
+              "style": { "textAlign": "right" }
+            },
+            "children": [
+              {
+                "id": "invoice-title",
+                "type": "heading",
+                "props": {
+                  "level": 1,
+                  "text": "INVOICE",
+                  "style": { "fontSize": "32px", "color": "#333333" }
+                }
+              },
+              {
+                "id": "invoice-number",
+                "type": "text",
+                "props": {
+                  "text": "#{{invoiceNumber}}",
+                  "style": { "fontSize": "14px", "color": "#666666" }
+                }
+              },
+              {
+                "id": "invoice-date",
+                "type": "text",
+                "props": {
+                  "text": "Date: {{date}}",
+                  "style": { "fontSize": "10px" }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bill-to",
+        "type": "container",
+        "props": { "style": { "marginBottom": "32px" } },
+        "children": [
+          {
+            "id": "bill-to-label",
+            "type": "text",
+            "props": {
+              "text": "Bill To:",
+              "style": { "fontSize": "10px", "color": "#666666", "textTransform": "uppercase" }
+            }
+          },
+          {
+            "id": "customer-name",
+            "type": "text",
+            "props": {
+              "text": "{{customer.name}}",
+              "style": { "fontSize": "14px", "fontWeight": "bold" }
+            }
+          }
+        ]
+      },
+      {
+        "id": "items-table",
+        "type": "table",
+        "props": {
+          "headers": ["Description", "Qty", "Rate", "Amount"],
+          "headerStyle": {
+            "backgroundColor": "#f8f9fa",
+            "fontSize": "10px",
+            "fontWeight": "bold",
+            "padding": "12px 8px"
+          },
+          "cellStyle": {
+            "fontSize": "10px",
+            "padding": "12px 8px",
+            "borderBottom": "1px solid #eeeeee"
+          },
+          "columnWidths": ["50%", "15%", "15%", "20%"]
+        },
+        "children": [
+          {
+            "id": "items-loop",
+            "type": "loop",
+            "props": { "items": "{{items}}", "itemVariable": "item" },
+            "children": [
+              {
+                "id": "item-row",
+                "type": "table-row",
+                "children": [
+                  { "id": "desc", "type": "text", "props": { "text": "{{item.description}}" } },
+                  { "id": "qty", "type": "text", "props": { "text": "{{item.quantity}}" } },
+                  { "id": "rate", "type": "text", "props": { "text": "${{item.rate}}" } },
+                  { "id": "amt", "type": "text", "props": { "text": "${{item.amount}}" } }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "total",
+        "type": "container",
+        "props": { "style": { "marginTop": "24px", "textAlign": "right" } },
+        "children": [
+          {
+            "id": "total-text",
+            "type": "text",
+            "props": {
+              "text": "Total: ${{total}}",
+              "style": { "fontSize": "18px", "fontWeight": "bold" }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "variables": [
+    { "name": "invoiceNumber", "type": "string", "defaultValue": "INV-001" },
+    { "name": "date", "type": "string", "defaultValue": "2025-01-15" },
+    { "name": "company", "type": "object", "defaultValue": { "name": "Your Company", "address": { "line1": "123 Main St", "city": "San Francisco", "state": "CA", "postalCode": "94102" } } },
+    { "name": "customer", "type": "object", "defaultValue": { "name": "Acme Corp" } },
+    { "name": "items", "type": "array", "itemType": "object", "defaultValue": [{ "description": "Service", "quantity": 1, "rate": 100, "amount": 100 }] },
+    { "name": "total", "type": "number", "defaultValue": 100 }
+  ]
+}
