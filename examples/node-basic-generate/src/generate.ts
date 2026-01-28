@@ -1,10 +1,10 @@
 import 'dotenv/config';
-import { Renderbase } from '@renderbase/sdk';
+import { Rynko } from '@rynko/sdk';
 
 async function main() {
   // Initialize the client
-  const client = new Renderbase({
-    apiKey: process.env.RENDERBASE_API_KEY!,
+  const client = new Rynko({
+    apiKey: process.env.RYNKO_API_KEY!,
   });
 
   // Generate a PDF document

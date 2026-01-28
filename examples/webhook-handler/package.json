@@ -1,14 +1,14 @@
 {
-  "name": "renderbase-webhook-handler",
+  "name": "rynko-webhook-handler",
   "version": "1.0.0",
-  "description": "Webhook handler for Renderbase document events",
+  "description": "Webhook handler for Rynko document events",
   "type": "module",
   "scripts": {
     "start": "tsx src/server.ts",
     "dev": "tsx watch src/server.ts"
   },
   "dependencies": {
-    "@renderbase/sdk": "^1.0.0",
+    "@rynko/sdk": "^1.0.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2"
   },

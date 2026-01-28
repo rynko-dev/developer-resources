@@ -1,12 +1,12 @@
 # Basic Document Generation (Node.js)
 
-This example shows how to generate PDF and Excel documents using the Renderbase Node.js SDK.
+This example shows how to generate PDF and Excel documents using the Rynko Node.js SDK.
 
 ## Prerequisites
 
 - Node.js 18+
-- Renderbase API key ([get one here](https://renderbase.dev/dashboard/api-keys))
-- A template created in Renderbase
+- Rynko API key ([get one here](https://rynko.dev/dashboard/api-keys))
+- A template created in Rynko
 
 ## Setup
 
@@ -17,7 +17,7 @@ This example shows how to generate PDF and Excel documents using the Renderbase 
 
 2. Create a `.env` file with your API key:
    ```bash
-   RENDERBASE_API_KEY=your-api-key-here
+   RYNKO_API_KEY=your-api-key-here
    ```
 
 ## Usage
@@ -39,10 +39,10 @@ npm run generate:excel
 ### Basic PDF Generation
 
 ```typescript
-import { Renderbase } from '@renderbase/sdk';
+import { Rynko } from '@rynko/sdk';
 
-const client = new Renderbase({
-  apiKey: process.env.RENDERBASE_API_KEY,
+const client = new Rynko({
+  apiKey: process.env.RYNKO_API_KEY,
 });
 
 const result = await client.documents.generate({
@@ -115,12 +115,12 @@ Variables in your template use the `{{variableName}}` syntax:
 ## Error Handling
 
 ```typescript
-import { Renderbase, RenderbaseError } from '@renderbase/sdk';
+import { Rynko, RynkoError } from '@rynko/sdk';
 
 try {
   const result = await client.documents.generate({...});
 } catch (error) {
-  if (error instanceof RenderbaseError) {
+  if (error instanceof RynkoError) {
     console.error('API Error:', error.message);
     console.error('Error Code:', error.code);
     console.error('Status:', error.status);
@@ -132,6 +132,6 @@ try {
 
 ## Related Resources
 
-- [API Reference](https://docs.renderbase.dev/api-reference)
-- [Template Schema](https://docs.renderbase.dev/developer-guide/template-schema)
-- [SDK Documentation](https://docs.renderbase.dev/sdk/node)
+- [API Reference](https://docs.rynko.dev/api-reference)
+- [Template Schema](https://docs.rynko.dev/developer-guide/template-schema)
+- [SDK Documentation](https://docs.rynko.dev/sdk/node)

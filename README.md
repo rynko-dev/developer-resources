@@ -1,10 +1,10 @@
-# Renderbase Developer Resources
+# Rynko Developer Resources
 
-Official developer resources for [Renderbase](https://renderbase.dev) - the document generation platform for creating professional PDFs and Excel files from templates.
+Official developer resources for [Rynko](https://rynko.dev) - the document generation platform for creating professional PDFs and Excel files from templates.
 
-## What is Renderbase?
+## What is Rynko?
 
-Renderbase is a document generation platform that lets you:
+Rynko is a document generation platform that lets you:
 
 - **Design once, generate everywhere**: Create templates that generate both PDF and Excel documents
 - **Generate PDFs**: Professional documents with tables, charts, QR codes, and more
@@ -17,13 +17,13 @@ Renderbase is a document generation platform that lets you:
 
 ### SDKs
 
-Official client libraries for integrating Renderbase into your applications:
+Official client libraries for integrating Rynko into your applications:
 
 | Language | Package | Repository | Registry |
 |----------|---------|------------|----------|
-| Node.js | `@renderbase/sdk` | [renderbase/sdk-node](https://github.com/renderbase/sdk-node) | [![npm](https://img.shields.io/npm/v/@renderbase/sdk)](https://www.npmjs.com/package/@renderbase/sdk) |
-| Python | `renderbase` | [renderbase/sdk-python](https://github.com/renderbase/sdk-python) | [![PyPI](https://img.shields.io/pypi/v/renderbase)](https://pypi.org/project/renderbase/) |
-| Java | `renderbase-sdk` | [renderbase/sdk-java](https://github.com/renderbase/sdk-java) | [![Maven](https://img.shields.io/maven-central/v/com.renderbase/sdk)](https://search.maven.org/artifact/com.renderbase/sdk) |
+| Node.js | `@rynko/sdk` | [rynko/sdk-node](https://github.com/rynko/sdk-node) | [![npm](https://img.shields.io/npm/v/@rynko/sdk)](https://www.npmjs.com/package/@rynko/sdk) |
+| Python | `rynko` | [rynko/sdk-python](https://github.com/rynko/sdk-python) | [![PyPI](https://img.shields.io/pypi/v/rynko)](https://pypi.org/project/rynko/) |
+| Java | `rynko-sdk` | [rynko/sdk-java](https://github.com/rynko/sdk-java) | [![Maven](https://img.shields.io/maven-central/v/com.rynko/sdk)](https://search.maven.org/artifact/com.rynko/sdk) |
 
 ### Examples
 
@@ -31,7 +31,7 @@ Ready-to-use code examples and starter projects:
 
 | Example | Description |
 |---------|-------------|
-| [Basic Generate (Node.js)](./examples/node-basic-generate) | Generate your first PDF with Renderbase |
+| [Basic Generate (Node.js)](./examples/node-basic-generate) | Generate your first PDF with Rynko |
 | [Basic Generate (Python)](./examples/python-basic-generate) | Generate PDFs using Python |
 | [Batch Documents](./examples/batch-documents) | Generate multiple documents from data |
 | [Webhook Handler](./examples/webhook-handler) | Handle document generation events |
@@ -55,20 +55,20 @@ Sample PDF and Excel templates in JSON format:
 
 ### 1. Get your API Key
 
-Sign up at [renderbase.dev](https://renderbase.dev) and create an API key from your dashboard.
+Sign up at [rynko.dev](https://rynko.dev) and create an API key from your dashboard.
 
 ### 2. Install the SDK
 
 ```bash
 # Node.js
-npm install @renderbase/sdk
+npm install @rynko/sdk
 
 # Python
-pip install renderbase
+pip install rynko
 
 # Java (Maven)
 <dependency>
-  <groupId>com.renderbase</groupId>
+  <groupId>com.rynko</groupId>
   <artifactId>sdk</artifactId>
   <version>1.0.0</version>
 </dependency>
@@ -78,10 +78,10 @@ pip install renderbase
 
 ```javascript
 // Node.js
-import { Renderbase } from '@renderbase/sdk';
+import { Rynko } from '@rynko/sdk';
 
-const client = new Renderbase({
-  apiKey: process.env.RENDERBASE_API_KEY,
+const client = new Rynko({
+  apiKey: process.env.RYNKO_API_KEY,
 });
 
 const result = await client.documents.generate({
@@ -102,9 +102,9 @@ console.log('Document URL:', result.downloadUrl);
 
 ```python
 # Python
-from renderbase import Renderbase
+from rynko import Rynko
 
-client = Renderbase(api_key="your-api-key")
+client = Rynko(api_key="your-api-key")
 
 result = client.documents.generate(
     template_id="tmpl_invoice",
@@ -124,10 +124,10 @@ print(f"Document URL: {result['downloadUrl']}")
 
 ```java
 // Java
-import com.renderbase.Renderbase;
-import com.renderbase.models.*;
+import com.rynko.Rynko;
+import com.rynko.models.*;
 
-Renderbase client = new Renderbase("your-api-key");
+Rynko client = new Rynko("your-api-key");
 
 Map<String, Object> variables = new HashMap<>();
 variables.put("invoiceNumber", "INV-001");
@@ -147,15 +147,15 @@ System.out.println("Document URL: " + result.getDownloadUrl());
 
 ## Documentation
 
-- **API Reference**: [docs.renderbase.dev/api-reference](https://docs.renderbase.dev/api-reference)
-- **Developer Guide**: [docs.renderbase.dev/developer-guide](https://docs.renderbase.dev/developer-guide)
-- **Template Schema**: [docs.renderbase.dev/developer-guide/template-schema](https://docs.renderbase.dev/developer-guide/template-schema)
+- **API Reference**: [docs.rynko.dev/api-reference](https://docs.rynko.dev/api-reference)
+- **Developer Guide**: [docs.rynko.dev/developer-guide](https://docs.rynko.dev/developer-guide)
+- **Template Schema**: [docs.rynko.dev/developer-guide/template-schema](https://docs.rynko.dev/developer-guide/template-schema)
 
 ## Support
 
 - **Issues & Bug Reports**: [GitHub Issues](./ISSUES.md)
-- **Feature Requests**: [GitHub Discussions](https://github.com/renderbase/developer-resources/discussions)
-- **Email Support**: support@renderbase.dev
+- **Feature Requests**: [GitHub Discussions](https://github.com/rynko/developer-resources/discussions)
+- **Email Support**: support@rynko.dev
 
 ## Roadmap
 

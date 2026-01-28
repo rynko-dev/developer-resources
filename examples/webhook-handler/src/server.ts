@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import { verifyWebhookSignature, WebhookSignatureError } from '@renderbase/sdk';
+import { verifyWebhookSignature, WebhookSignatureError } from '@rynko/sdk';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -14,9 +14,9 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Renderbase webhook endpoint
-app.post('/webhooks/renderbase', async (req, res) => {
-  const signature = req.headers['x-renderbase-signature'] as string;
+// Rynko webhook endpoint
+app.post('/webhooks/rynko', async (req, res) => {
+  const signature = req.headers['x-rynko-signature'] as string;
   const payload = req.body;
 
   // Verify the webhook signature
@@ -109,7 +109,7 @@ async function handleDocumentFailed(data: { jobId: string; error: string; templa
 
   // Example: Retry logic
   // if (shouldRetry(data.jobId)) {
-  //   await renderbase.documents.retry(data.jobId);
+  //   await rynko.documents.retry(data.jobId);
   // }
 
   // Example: Alert team
@@ -118,5 +118,5 @@ async function handleDocumentFailed(data: { jobId: string; error: string; templa
 
 app.listen(port, () => {
   console.log(`Webhook server listening on port ${port}`);
-  console.log(`Webhook endpoint: http://localhost:${port}/webhooks/renderbase`);
+  console.log(`Webhook endpoint: http://localhost:${port}/webhooks/rynko`);
 });

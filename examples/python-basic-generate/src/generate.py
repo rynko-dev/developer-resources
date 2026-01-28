@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""Basic document generation example with Renderbase Python SDK."""
+"""Basic document generation example with Rynko Python SDK."""
 
 import os
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from renderbase import Renderbase
+from rynko import Rynko
 
 load_dotenv()
 
 
 def main():
     # Initialize the client
-    client = Renderbase(api_key=os.environ["RENDERBASE_API_KEY"])
+    client = Rynko(api_key=os.environ["RYNKO_API_KEY"])
 
     # Generate a PDF document
     result = client.documents.generate(

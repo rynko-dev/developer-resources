@@ -1,11 +1,11 @@
 # Webhook Handler Example
 
-This example demonstrates how to receive and process Renderbase webhook events for document generation status updates.
+This example demonstrates how to receive and process Rynko webhook events for document generation status updates.
 
 ## Prerequisites
 
 - Node.js 18+
-- Renderbase API key and webhook secret
+- Rynko API key and webhook secret
 - A publicly accessible URL (use ngrok for local development)
 
 ## Setup
@@ -17,7 +17,7 @@ This example demonstrates how to receive and process Renderbase webhook events f
 
 2. Create a `.env` file:
    ```bash
-   RENDERBASE_API_KEY=your-api-key
+   RYNKO_API_KEY=your-api-key
    WEBHOOK_SECRET=your-webhook-secret
    PORT=3000
    ```
@@ -32,13 +32,13 @@ This example demonstrates how to receive and process Renderbase webhook events f
    ngrok http 3000
    ```
 
-5. Register your webhook URL in Renderbase:
+5. Register your webhook URL in Rynko:
    - Go to Dashboard > Settings > Webhooks
-   - Add your ngrok URL: `https://your-subdomain.ngrok.io/webhooks/renderbase`
+   - Add your ngrok URL: `https://your-subdomain.ngrok.io/webhooks/rynko`
 
 ## Webhook Events
 
-Renderbase sends the following webhook events:
+Rynko sends the following webhook events:
 
 | Event | Description |
 |-------|-------------|
@@ -57,7 +57,7 @@ Renderbase sends the following webhook events:
     "jobId": "job_xyz789",
     "templateId": "tmpl_invoice",
     "format": "pdf",
-    "downloadUrl": "https://api.renderbase.dev/api/v1/documents/jobs/job_xyz789/download",
+    "downloadUrl": "https://api.rynko.dev/api/v1/documents/jobs/job_xyz789/download",
     "expiresAt": "2025-01-22T10:30:00.000Z",
     "metadata": {
       "invoiceNumber": "INV-001"
@@ -68,19 +68,19 @@ Renderbase sends the following webhook events:
 
 ## Signature Verification
 
-Always verify webhook signatures to ensure events are from Renderbase:
+Always verify webhook signatures to ensure events are from Rynko:
 
 ```typescript
-import { verifyWebhookSignature } from '@renderbase/sdk';
+import { verifyWebhookSignature } from '@rynko/sdk';
 
 const event = verifyWebhookSignature({
   payload: requestBody,
-  signature: headers['x-renderbase-signature'],
+  signature: headers['x-rynko-signature'],
   secret: process.env.WEBHOOK_SECRET,
 });
 ```
 
 ## Related Resources
 
-- [Webhook Documentation](https://docs.renderbase.dev/webhooks)
-- [Security Best Practices](https://docs.renderbase.dev/webhooks/security)
+- [Webhook Documentation](https://docs.rynko.dev/webhooks)
+- [Security Best Practices](https://docs.rynko.dev/webhooks/security)

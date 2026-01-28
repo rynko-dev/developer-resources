@@ -1,12 +1,12 @@
 # Basic Document Generation (Python)
 
-This example shows how to generate PDF and Excel documents using the Renderbase Python SDK.
+This example shows how to generate PDF and Excel documents using the Rynko Python SDK.
 
 ## Prerequisites
 
 - Python 3.8+
-- Renderbase API key ([get one here](https://renderbase.dev/dashboard/api-keys))
-- A template created in Renderbase
+- Rynko API key ([get one here](https://rynko.dev/dashboard/api-keys))
+- A template created in Rynko
 
 ## Setup
 
@@ -23,7 +23,7 @@ This example shows how to generate PDF and Excel documents using the Renderbase 
 
 3. Create a `.env` file with your API key:
    ```bash
-   RENDERBASE_API_KEY=your-api-key-here
+   RYNKO_API_KEY=your-api-key-here
    ```
 
 ## Usage
@@ -37,9 +37,9 @@ python src/generate.py
 ### Synchronous Client
 
 ```python
-from renderbase import Renderbase
+from rynko import Rynko
 
-client = Renderbase(api_key="your-api-key")
+client = Rynko(api_key="your-api-key")
 
 result = client.documents.generate(
     template_id="tmpl_invoice",
@@ -57,10 +57,10 @@ print(f"Download URL: {result['downloadUrl']}")
 ### Async Client
 
 ```python
-from renderbase import AsyncRenderbase
+from rynko import AsyncRynko
 
 async def generate_document():
-    async with AsyncRenderbase(api_key="your-api-key") as client:
+    async with AsyncRynko(api_key="your-api-key") as client:
         result = await client.documents.generate(
             template_id="tmpl_invoice",
             format="pdf",
@@ -75,11 +75,11 @@ async def generate_document():
 ### Error Handling
 
 ```python
-from renderbase import Renderbase, RenderbaseError
+from rynko import Rynko, RynkoError
 
 try:
     result = client.documents.generate(...)
-except RenderbaseError as e:
+except RynkoError as e:
     print(f"API Error: {e.message}")
     print(f"Error Code: {e.code}")
     print(f"Status: {e.status}")
@@ -87,5 +87,5 @@ except RenderbaseError as e:
 
 ## Related Resources
 
-- [API Reference](https://docs.renderbase.dev/api-reference)
-- [SDK Documentation](https://docs.renderbase.dev/sdk/python)
+- [API Reference](https://docs.rynko.dev/api-reference)
+- [SDK Documentation](https://docs.rynko.dev/sdk/python)

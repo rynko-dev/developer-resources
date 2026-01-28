@@ -1,7 +1,7 @@
 {
-  "name": "renderbase-node-basic-generate",
+  "name": "rynko-node-basic-generate",
   "version": "1.0.0",
-  "description": "Basic document generation example with Renderbase Node.js SDK",
+  "description": "Basic document generation example with Rynko Node.js SDK",
   "type": "module",
   "scripts": {
     "start": "tsx src/generate.ts",
@@ -9,7 +9,7 @@
     "generate:excel": "tsx src/generate-excel.ts"
   },
   "dependencies": {
-    "@renderbase/sdk": "^1.0.0",
+    "@rynko/sdk": "^1.0.0",
     "dotenv": "^16.3.1"
   },
   "devDependencies": {
