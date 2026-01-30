@@ -21,9 +21,9 @@ Official client libraries for integrating Rynko into your applications:
 
 | Language | Package | Repository | Registry |
 |----------|---------|------------|----------|
-| Node.js | `@rynko/sdk` | [rynko/sdk-node](https://github.com/rynko/sdk-node) | [![npm](https://img.shields.io/npm/v/@rynko/sdk)](https://www.npmjs.com/package/@rynko/sdk) |
-| Python | `rynko` | [rynko/sdk-python](https://github.com/rynko/sdk-python) | [![PyPI](https://img.shields.io/pypi/v/rynko)](https://pypi.org/project/rynko/) |
-| Java | `rynko-sdk` | [rynko/sdk-java](https://github.com/rynko/sdk-java) | [![Maven](https://img.shields.io/maven-central/v/com.rynko/sdk)](https://search.maven.org/artifact/com.rynko/sdk) |
+| Node.js | `@rynko/sdk` | [rynko-dev/sdk-node](https://github.com/rynko-dev/sdk-node) | [![npm](https://img.shields.io/npm/v/@rynko/sdk)](https://www.npmjs.com/package/@rynko/sdk) |
+| Python | `rynko` | [rynko-dev/sdk-python](https://github.com/rynko-dev/sdk-python) | [![PyPI](https://img.shields.io/pypi/v/rynko)](https://pypi.org/project/rynko/) |
+| Java | `dev.rynko:sdk` | [rynko-dev/sdk-java](https://github.com/rynko-dev/sdk-java) | [![Maven](https://img.shields.io/maven-central/v/dev.rynko/sdk)](https://search.maven.org/artifact/dev.rynko/sdk) |
 
 ### Examples
 
@@ -68,7 +68,7 @@ pip install rynko
 
 # Java (Maven)
 <dependency>
-  <groupId>com.rynko</groupId>
+  <groupId>dev.rynko</groupId>
   <artifactId>sdk</artifactId>
   <version>1.0.0</version>
 </dependency>
@@ -124,8 +124,8 @@ print(f"Document URL: {result['downloadUrl']}")
 
 ```java
 // Java
-import com.rynko.Rynko;
-import com.rynko.models.*;
+import dev.rynko.Rynko;
+import dev.rynko.models.*;
 
 Rynko client = new Rynko("your-api-key");
 
@@ -154,7 +154,7 @@ System.out.println("Document URL: " + result.getDownloadUrl());
 ## Support
 
 - **Issues & Bug Reports**: [GitHub Issues](./ISSUES.md)
-- **Feature Requests**: [GitHub Discussions](https://github.com/rynko/developer-resources/discussions)
+- **Feature Requests**: [GitHub Discussions](https://github.com/rynko-dev/developer-resources/discussions)
 - **Email Support**: support@rynko.dev
 
 ## Roadmap
