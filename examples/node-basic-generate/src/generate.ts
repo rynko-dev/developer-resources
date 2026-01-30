@@ -7,8 +7,8 @@ async function main() {
     apiKey: process.env.RYNKO_API_KEY!,
   });
 
-  // Generate a PDF document
-  const result = await client.documents.generate({
+  // Generate a PDF document (queues the job)
+  const job = await client.documents.generate({
     templateId: 'invoice', // Your template ID (UUID, shortId, or slug)
     format: 'pdf',
     variables: {
@@ -47,9 +47,19 @@ async function main() {
     },
   });
 
-  console.log('Document generated successfully!');
-  console.log('Download URL:', result.downloadUrl);
-  console.log('Job ID:', result.jobId);
+  console.log('Document generation queued!');
+  console.log('Job ID:', job.jobId);
+  console.log('Status:', job.status);
+
+  // Wait for the document to be generated
+  const completed = await client.documents.waitForCompletion(job.jobId);
+
+  if (completed.status === 'completed') {
+    console.log('Document generated successfully!');
+    console.log('Download URL:', completed.downloadUrl);
+  } else {
+    console.error('Document generation failed:', completed.errorMessage);
+  }
 }
 
 main().catch(console.error);

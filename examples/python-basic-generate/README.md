@@ -34,6 +34,8 @@ python src/generate.py
 
 ## Code Examples
 
+Document generation in Rynko is **asynchronous**. The `generate()` method queues the job and returns immediately with a job ID. Use `wait_for_completion()` to poll until the document is ready.
+
 ### Synchronous Client
 
 ```python
@@ -41,7 +43,8 @@ from rynko import Rynko
 
 client = Rynko(api_key="your-api-key")
 
-result = client.documents.generate(
+# Queue the document generation
+job = client.documents.generate(
     template_id="tmpl_invoice",
     format="pdf",
     variables={
@@ -51,7 +54,12 @@ result = client.documents.generate(
     },
 )
 
-print(f"Download URL: {result['downloadUrl']}")
+print(f"Job ID: {job['jobId']}")
+print(f"Status: {job['status']}")  # 'queued'
+
+# Wait for completion to get the download URL
+completed = client.documents.wait_for_completion(job["jobId"])
+print(f"Download URL: {completed['downloadUrl']}")
 ```
 
 ### Async Client
@@ -61,7 +69,8 @@ from rynko import AsyncRynko
 
 async def generate_document():
     async with AsyncRynko(api_key="your-api-key") as client:
-        result = await client.documents.generate(
+        # Queue the document generation
+        job = await client.documents.generate(
             template_id="tmpl_invoice",
             format="pdf",
             variables={
@@ -69,7 +78,10 @@ async def generate_document():
                 "customerName": "Acme Corp",
             },
         )
-        return result
+
+        # Wait for completion
+        completed = await client.documents.wait_for_completion(job["jobId"])
+        return completed
 ```
 
 ### Error Handling
@@ -78,7 +90,8 @@ async def generate_document():
 from rynko import Rynko, RynkoError
 
 try:
-    result = client.documents.generate(...)
+    job = client.documents.generate(...)
+    completed = client.documents.wait_for_completion(job["jobId"])
 except RynkoError as e:
     print(f"API Error: {e.message}")
     print(f"Error Code: {e.code}")

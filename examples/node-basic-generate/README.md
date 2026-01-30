@@ -38,6 +38,8 @@ npm run generate:excel
 
 ### Basic PDF Generation
 
+Document generation in Rynko is **asynchronous**. The `generate()` method queues the job and returns immediately with a job ID. Use `waitForCompletion()` to poll until the document is ready.
+
 ```typescript
 import { Rynko } from '@rynko/sdk';
 
@@ -45,7 +47,8 @@ const client = new Rynko({
   apiKey: process.env.RYNKO_API_KEY,
 });
 
-const result = await client.documents.generate({
+// Queue the document generation
+const job = await client.documents.generate({
   templateId: 'your-template-id',
   format: 'pdf',
   variables: {
@@ -54,13 +57,18 @@ const result = await client.documents.generate({
   },
 });
 
-console.log('Download URL:', result.downloadUrl);
+console.log('Job ID:', job.jobId);
+console.log('Status:', job.status); // 'queued'
+
+// Wait for completion to get the download URL
+const completed = await client.documents.waitForCompletion(job.jobId);
+console.log('Download URL:', completed.downloadUrl);
 ```
 
 ### PDF with Dynamic Data
 
 ```typescript
-const invoice = await client.documents.generate({
+const job = await client.documents.generate({
   templateId: 'tmpl_invoice',
   format: 'pdf',
   variables: {
@@ -83,12 +91,15 @@ const invoice = await client.documents.generate({
     total: 2160,
   },
 });
+
+const completed = await client.documents.waitForCompletion(job.jobId);
+console.log('Download URL:', completed.downloadUrl);
 ```
 
 ### Excel Generation
 
 ```typescript
-const report = await client.documents.generate({
+const job = await client.documents.generate({
   templateId: 'tmpl_report',
   format: 'excel',
   variables: {
@@ -102,6 +113,9 @@ const report = await client.documents.generate({
     ],
   },
 });
+
+const completed = await client.documents.waitForCompletion(job.jobId);
+console.log('Download URL:', completed.downloadUrl);
 ```
 
 ## Template Variables

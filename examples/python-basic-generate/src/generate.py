@@ -13,8 +13,8 @@ def main():
     # Initialize the client
     client = Rynko(api_key=os.environ["RYNKO_API_KEY"])
 
-    # Generate a PDF document
-    result = client.documents.generate(
+    # Generate a PDF document (queues the job)
+    job = client.documents.generate(
         template_id="invoice",  # Your template ID (UUID, shortId, or slug)
         format="pdf",
         variables={
@@ -53,9 +53,18 @@ def main():
         },
     )
 
-    print("Document generated successfully!")
-    print(f"Download URL: {result['downloadUrl']}")
-    print(f"Job ID: {result['jobId']}")
+    print("Document generation queued!")
+    print(f"Job ID: {job['jobId']}")
+    print(f"Status: {job['status']}")
+
+    # Wait for the document to be generated
+    completed = client.documents.wait_for_completion(job["jobId"])
+
+    if completed["status"] == "completed":
+        print("Document generated successfully!")
+        print(f"Download URL: {completed['downloadUrl']}")
+    else:
+        print(f"Document generation failed: {completed.get('errorMessage')}")
 
 
 if __name__ == "__main__":

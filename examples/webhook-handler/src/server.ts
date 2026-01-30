@@ -17,7 +17,7 @@ app.get('/health', (_req, res) => {
 // Rynko webhook endpoint
 app.post('/webhooks/rynko', async (req, res) => {
   const signature = req.headers['x-rynko-signature'] as string;
-  const payload = req.body;
+  const payload = req.body.toString(); // Convert Buffer to string
 
   // Verify the webhook signature
   try {
@@ -29,26 +29,39 @@ app.post('/webhooks/rynko', async (req, res) => {
 
     console.log(`Received event: ${event.type}`);
     console.log(`Event ID: ${event.id}`);
-    console.log(`Timestamp: ${event.createdAt}`);
+    console.log(`Timestamp: ${event.timestamp}`);
 
     // Handle different event types
     switch (event.type) {
       case 'document.generated':
-        console.log(`Document ready: ${event.data.downloadUrl}`);
-        console.log(`Job ID: ${event.data.jobId}`);
+        const generatedData = event.data as {
+          jobId: string;
+          downloadUrl: string;
+          templateId: string;
+          format: string;
+          metadata?: Record<string, unknown>;
+        };
+        console.log(`Document ready: ${generatedData.downloadUrl}`);
+        console.log(`Job ID: ${generatedData.jobId}`);
         // Download the document, send notification, update database, etc.
-        await handleDocumentGenerated(event.data);
+        await handleDocumentGenerated(generatedData);
         break;
 
       case 'document.failed':
-        console.error(`Document generation failed for job: ${event.data.jobId}`);
-        console.error(`Error: ${event.data.error}`);
+        const failedData = event.data as {
+          jobId: string;
+          error: string;
+          templateId: string;
+        };
+        console.error(`Document generation failed for job: ${failedData.jobId}`);
+        console.error(`Error: ${failedData.error}`);
         // Handle the failure - retry, notify user, etc.
-        await handleDocumentFailed(event.data);
+        await handleDocumentFailed(failedData);
         break;
 
       case 'document.downloaded':
-        console.log(`Document downloaded: ${event.data.jobId}`);
+        const downloadedData = event.data as { jobId: string };
+        console.log(`Document downloaded: ${downloadedData.jobId}`);
         // Track download analytics
         break;
 
