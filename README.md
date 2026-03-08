@@ -35,6 +35,10 @@ Ready-to-use code examples and starter projects:
 | [Basic Generate (Python)](./examples/python-basic-generate) | Generate PDFs using Python |
 | [Batch Documents](./examples/batch-documents) | Generate multiple documents from data |
 | [Webhook Handler](./examples/webhook-handler) | Handle document generation events |
+| [Flow: Submit Run (Node.js)](./examples/flow-submit-run) | Submit and monitor Flow runs |
+| [Flow: Submit Run (Python)](./examples/python-flow-submit) | Submit Flow runs using Python |
+| [Flow: Approval Bot](./examples/flow-approval-bot) | Automated approval bot with business rules |
+| [Flow: Webhook Handler](./examples/flow-webhook-handler) | Handle Flow run webhook events |
 
 ### Templates
 
@@ -143,6 +147,58 @@ GenerateResult result = client.documents().generate(
 );
 
 System.out.println("Document URL: " + result.getDownloadUrl());
+```
+
+### 4. Submit a Flow run
+
+```javascript
+// Node.js
+import { Rynko } from '@rynko/sdk';
+
+const client = new Rynko({
+  apiKey: process.env.RYNKO_API_KEY,
+});
+
+// Submit a run to a gate for validation
+const run = await client.flow.submitRun('gate_abc123', {
+  input: {
+    customerName: 'Acme Corp',
+    amount: 500,
+    items: [{ sku: 'WIDGET-001', quantity: 10, unitPrice: 50 }],
+  },
+});
+
+// Wait for validation to complete
+const result = await client.flow.waitForRun(run.id);
+
+if (result.status === 'approved') {
+  console.log('Approved!', result.output);
+} else if (result.status === 'rejected') {
+  console.log('Rejected:', result.errors);
+}
+```
+
+```python
+# Python
+from rynko import Rynko
+
+client = Rynko(api_key="your-api-key")
+
+run = client.flow.submit_run(
+    "gate_abc123",
+    input={
+        "customerName": "Acme Corp",
+        "amount": 500,
+        "items": [{"sku": "WIDGET-001", "quantity": 10, "unitPrice": 50}],
+    },
+)
+
+result = client.flow.wait_for_run(run["id"])
+
+if result["status"] == "approved":
+    print("Approved!", result.get("output"))
+elif result["status"] == "rejected":
+    print("Rejected:", result.get("errors"))
 ```
 
 ## Documentation
