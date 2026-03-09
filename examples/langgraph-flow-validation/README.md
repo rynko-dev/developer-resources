@@ -89,6 +89,20 @@ Example 2: Ambiguous order (may need self-correction)
   [process] Order processed successfully.
 ```
 
+## Using a Different LLM Provider
+
+The example defaults to OpenAI (`gpt-4o-mini`). To use OpenRouter or another provider:
+
+```bash
+OPENAI_API_KEY=sk-or-...           # Your OpenRouter key
+OPENAI_API_BASE=https://openrouter.ai/api/v1
+```
+
+Then update the model in `src/main.py`:
+```python
+llm = ChatOpenAI(model="nvidia/nemotron-3-nano-30b-a3b:free", temperature=0)
+```
+
 ## Blog Post
 
 Full walkthrough: [Adding Output Validation to Your LangGraph Agent with Rynko Flow](https://rynko.hashnode.dev/langgraph-flow-validation)

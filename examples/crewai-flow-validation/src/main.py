@@ -33,6 +33,11 @@ RYNKO_BASE_URL = os.environ.get("RYNKO_BASE_URL", "https://api.rynko.dev/api")
 RYNKO_API_KEY = os.environ["RYNKO_API_KEY"]
 GATE_ID = os.environ["FLOW_GATE_ID"]
 
+# LLM configuration — defaults to OpenAI gpt-4o-mini.
+# To use OpenRouter: pip install litellm, then set
+#   OPENROUTER_API_KEY=sk-or-... and OPENAI_MODEL_NAME=openrouter/model-name
+LLM_MODEL = os.environ.get("OPENAI_MODEL_NAME", "gpt-4o-mini")
+
 
 # ── Flow Validation Tool ─────────────────────────────────────────────────────
 
@@ -50,7 +55,7 @@ def validate_order(order_json: str) -> str:
 
     response = httpx.post(
         f"{RYNKO_BASE_URL}/flow/gates/{GATE_ID}/runs",
-        json={"input": payload},
+        json={"payload": payload},
         headers={
             "Authorization": f"Bearer {RYNKO_API_KEY}",
             "Content-Type": "application/json",
@@ -61,8 +66,8 @@ def validate_order(order_json: str) -> str:
     result = response.json()
 
     if result.get("status") == "validation_failed":
-        errors = result.get("errors", [])
-        error_lines = [f"- {e.get('field')}: {e.get('message')}" for e in errors]
+        errors = result.get("error", {}).get("details", [])
+        error_lines = [f"- {e.get('field', e.get('rule_id', 'unknown'))}: {e.get('message')}" for e in errors]
         return json.dumps({
             "success": False,
             "status": "validation_failed",
@@ -112,6 +117,7 @@ order_processor = Agent(
         "Currency must be a 3-letter ISO code (USD, EUR, GBP, or INR). "
         "Amount must be a positive number. Vendor must not be empty."
     ),
+    llm=LLM_MODEL,
     verbose=True,
     allow_delegation=False,
 )
@@ -129,6 +135,7 @@ order_validator = Agent(
         "4. Repeat until validation passes or you've tried 3 times\n\n"
         "Always report the final validation status and run ID."
     ),
+    llm=LLM_MODEL,
     tools=[validate_order, check_run_status],
     verbose=True,
     allow_delegation=False,

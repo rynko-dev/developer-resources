@@ -47,7 +47,7 @@ def validate_with_flow(gate_id: str, payload: dict) -> dict:
     """Submit a payload to a Flow gate and return the validation result."""
     response = httpx.post(
         f"{RYNKO_BASE_URL}/flow/gates/{gate_id}/runs",
-        json={"input": payload},
+        json={"payload": payload},
         headers={
             "Authorization": f"Bearer {RYNKO_API_KEY}",
             "Content-Type": "application/json",
@@ -119,9 +119,9 @@ def validate_order(state: OrderState) -> dict:
     print(f"  [validate] status={status}")
 
     if status == "validation_failed":
-        errors = result.get("errors", [])
+        errors = result.get("error", {}).get("details", [])
         error_text = "\n".join(
-            f"- {e.get('field', 'unknown')}: {e.get('message', 'invalid')}"
+            f"- {e.get('field', e.get('rule_id', 'unknown'))}: {e.get('message', 'invalid')}"
             for e in errors
         )
         print(f"  [validate] errors:\n{error_text}")

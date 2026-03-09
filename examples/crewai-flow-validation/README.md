@@ -87,6 +87,19 @@ With bad data:
 > {"success": true, "status": "validated", "run_id": "..."}
 ```
 
+## Using a Different LLM Provider
+
+The example defaults to OpenAI (`gpt-4o-mini`). To use a different provider via [OpenRouter](https://openrouter.ai/):
+
+1. Install litellm: `pip install litellm`
+2. Set environment variables:
+   ```bash
+   OPENROUTER_API_KEY=sk-or-...
+   OPENAI_MODEL_NAME=openrouter/nvidia/nemotron-3-nano-30b-a3b:free
+   ```
+
+Any model supported by [litellm](https://docs.litellm.ai/docs/providers) works — just use the appropriate prefix and API key env var.
+
 ## Multiple Crews, Same Gate
 
 Different CrewAI crews can validate against the same gate:
